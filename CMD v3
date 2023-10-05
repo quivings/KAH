@@ -1,6 +1,21 @@
 --Init
 
 
+--[[
+	This script was in development since March 2023 and paused in April 2023. I picked it back up
+	again in June 2023, and again paused it late August 2023, however, indefinitely. It was supposed to 
+	be finished, but I just didn't allocate enough time for it. 
+	Then hyperion released on UWP, completely hindering my ability and confidence to complete it. 
+	I don't feel like risking my info being uploaded to ROBLOX through a honeypot.
+	This was also released unobfuscated due to MoonSec issues. Without a whitelist due to my incompentence and already
+	lacked interest in this script. However, I still feel confident this is pretty well made
+	and adding your own stuff to it should be pretty easy. I tried to structure it better
+	for readability. Since hyperion is on both UWP and WEB ROBLOX, I'm not sure who will use this
+	but if you do, enjoy. Some things have been omitted due to them not being made by me / owned by me.
+
+	Released open source and publicly discontinued forever on September 16th, 2023.
+]]
+
 if not game:IsLoaded() then
 	game.Loaded:Wait()
 end
