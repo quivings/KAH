@@ -409,16 +409,7 @@ local Main = UI:CreateWindow({
       Invite = "cmds",
       RememberJoins = true 
    },
-   KeySystem = true,
-   KeySettings = {
-      Title = "CMD 3.14",
-      Subtitle = "Access",
-      Note = "Join the discord (discord.gg/cmds)",
-      FileName = "CMDKey",
-      SaveKey = true,
-      GrabKeyFromSite = false, 
-      Key = "admin"
-   }
+   KeySystem = false
 })
 
 ----------------------------------------------------------
