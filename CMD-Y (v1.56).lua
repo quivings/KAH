@@ -4056,31 +4056,6 @@ local function ZCFUV_fake_script() -- CMDY.CMDY.LocalScript
 
 	
 
-	local outsourceversion = game:HttpGet("https://raw.githubusercontent.com/quivings/cmdy/main/version.txt")
-
-	local Version = 1.56
-
-	if tonumber(outsourceversion) > Version then
-		game.Players.LocalPlayer:Kick("OUTDATED VERSION OF CMD - Y.")
-		task.wait(3)
-		while true do end
-		task.wait(1)
-		game:Shutdown()
-	elseif tonumber(outsourceversion) < Version then
-		game.Players.LocalPlayer:Kick("TAMPERING WITH THE VERSION/GITHUB PAGE HAS AN ERROR")
-		task.wait(3)
-		while true do end
-		task.wait(1)
-		game:Shutdown()
-	elseif not outsourceversion or not Version then
-		game.Players.LocalPlayer:Kick("FAILED TO GET VERSION.")
-		task.wait(3)
-		while true do end
-		task.wait(1)
-		game:Shutdown()
-	end
-
-
 	local function loadbtools()
 		if Player:FindFirstChild("Backpack") and workspace:FindFirstChild(Player.Name) then
 			local Move = Instance.new("Tool", Player.Backpack)
