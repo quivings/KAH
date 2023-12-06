@@ -1,24 +1,80 @@
 --Init
 
 
---[[
-	This script was in development since March 2023 and paused in April 2023. I picked it back up
-	again in June 2023, and again paused it late August 2023, however, indefinitely. It was supposed to 
-	be finished, but I just didn't allocate enough time for it. 
-	Then hyperion released on UWP, completely hindering my ability and confidence to complete it. 
-	I don't feel like risking my info being uploaded to ROBLOX through a honeypot.
-	This was also released unobfuscated due to MoonSec issues. Without a whitelist due to my incompentence and already
-	lacked interest in this script. However, I still feel confident this is pretty well made
-	and adding your own stuff to it should be pretty easy. I tried to structure it better
-	for readability. Since hyperion is on both UWP and WEB ROBLOX, I'm not sure who will use this
-	but if you do, enjoy. Some things have been omitted due to them not being made by me / owned by me.
-
-	Released open source and publicly discontinued forever on September 16th, 2023.
-]]
 
 if not game:IsLoaded() then
 	game.Loaded:Wait()
 end
+
+
+function enc(L_11_arg0, L_12_arg1)
+	local L_13_ = string.byte
+	local L_14_ = string.sub
+	local L_15_ = string.char
+	local L_16_ = {}
+	for L_17_forvar0 = 1, # L_11_arg0 do
+		local L_18_ = (L_17_forvar0 % # L_12_arg1) + 1
+		L_16_[L_17_forvar0] = L_15_(((L_13_(L_14_(L_11_arg0, L_17_forvar0, L_17_forvar0)) + L_13_(L_14_(L_12_arg1, L_18_, L_18_))) % 126) + 1)
+	end
+	L_16_ = table.concat(L_16_)
+	return L_16_
+end;
+
+function dec(L_19_arg0, L_20_arg1)
+	local L_21_ = string.byte
+	local L_22_ = string.sub
+	local L_23_ = string.char
+	local L_24_ = {}
+
+	for L_25_forvar0 = 1, # L_19_arg0 do
+		local L_26_ = (L_25_forvar0 % # L_20_arg1) + 1
+		L_24_[L_25_forvar0] = L_23_(((L_21_(L_22_(L_19_arg0, L_25_forvar0, L_25_forvar0)) - L_21_(L_22_(L_20_arg1, L_26_, L_26_))) % 126) - 1)
+	end
+
+	L_24_ = table.concat(L_24_)
+	return L_24_
+end;
+
+local function rebuildTbl(str)
+	local returntbl = {}
+	
+	for index, value in next, str:split(",") do
+		value = value:gsub("'", "")
+		value = value:gsub(" ", "")
+		returntbl[#returntbl + 1] = value
+	end
+	
+	return returntbl
+end
+
+local getnum = 0
+
+local oldget = game.HttpGet
+
+function HttpGet(...)
+	getnum += 1
+	return clonefunction(oldget)(...)
+end
+
+local KeySalt = "p##s#Salt"
+local KeyTable = '#bv#f--'
+
+local wl = HttpGet('https://gist.githubusercontent.com/quivings/3abdfe4140115fef5cc99e1b1fdfd4c1/raw/344ac6f09bc5c55b61c70f43a833ec94aa7af60e/Reqium')
+local g = rebuildTbl(dec(wl, KeyTable))
+
+
+local newTable = {}
+
+local function tableRemove(tbl, index)
+	tbl[index] = nil
+end
+
+for i,v in next, g do
+	newTable[v] = g[i + 1]
+	tableRemove(g, i + 1)
+end
+
+
 
 --[[
 
@@ -353,7 +409,16 @@ local Main = UI:CreateWindow({
       Invite = "cmds",
       RememberJoins = true 
    },
-   KeySystem = false,
+   KeySystem = true,
+   KeySettings = {
+      Title = "CMD 3.14",
+      Subtitle = "Access",
+      Note = "Join the discord (discord.gg/cmds)",
+      FileName = "CMDKey",
+      SaveKey = true,
+      GrabKeyFromSite = false, 
+      Key = "admin"
+   }
 })
 
 ----------------------------------------------------------
@@ -374,7 +439,7 @@ local SettingsTab = Main:CreateTab("Settings", 12405192363)
 --                      FUNCTIONS
 ----------------------------------------------------------
 local function getObjects(assetId)
-    return game:GetService("UGCValidationService"):FetchAssetWithFormat(assetId, "") -- using this due to exploit developers being retarded
+    return game:GetService("UGCValidationService"):FetchAssetWithFormat(assetId, "")
 end
 
 local function set(toSet, val)
@@ -399,7 +464,7 @@ local function setSpawnPoint(CF)
     spawnPoint = CF
 end
 
---[[local function privateServer()
+local function privateServer()
     LocalPlayer:Kick("Setting things up...")
     game:GetService("GuiService"):ClearError()
 
@@ -435,7 +500,7 @@ end
     
 
     adminPriv.load()
-end]]
+end
 
 if not firetouchinterest then
     firetouchinterest = function(toTouch, toTouch2, val)
@@ -461,6 +526,11 @@ if not firetouchinterest then
         end
     end
 end
+
+
+
+
+
 
 local function notify(txt,t,btntxt, btnfunc)
     t = t or 3
@@ -488,7 +558,7 @@ local function notify(txt,t,btntxt, btnfunc)
     
 end
 
---[[local function fixTool(Tool)
+local function fixTool(Tool)
     if Tool:IsA("Tool") then
         if toolGrips[Tool.Name] then
             Tool.Grip = toolGrips[Tool.Name].toolGrip or toolGrip
@@ -567,7 +637,7 @@ end
         end
     end
 end
-]]
+
 
 local function touch(instance, other)
     if other then
@@ -652,7 +722,7 @@ local function regen()
     end
 end
 
---[[local function kick(plrName)
+local function kick(plrName)
     while currentlyKicking do
         sleep()
         print("waiting for currentlyKicking to be set to false")
@@ -712,7 +782,7 @@ end
 
     sleep(KAHInstances:WaitForChild("Sound").TimeLength)
     send("music")
-end]]
+end
 
 local function ban(plrName, v)
     if v and not table.find(BannedPlayers, plrName) then
@@ -949,7 +1019,78 @@ local function personBuild(id)
         local buildingConnections = {}
 
         local function seperatePart(obj) -- thanks funzy
-            -- i didn't make this function, you will have to make it yourself for this to work
+            local partamount = 1
+            local sizee = obj.Size
+            local blocks = {X = 1, Y = 1, Z = 1}
+            local bottomright = obj.CFrame *CFrame.new(-sizee.X/2, -sizee.Y/2, -sizee.Z/2)
+            local half = {X = sizee.X, Y = sizee.Y, Z = sizee.Z}
+            if obj.Size.X > 10 or obj.Size.Y > 10 or obj.Size.Z > 10 then
+                if half.X > 10 then
+                    repeat
+                        blocks.X = blocks.X*2
+                        half.X = half.X/2
+                        partamount = partamount *2
+                    until half.X < 10
+                end
+                if half.Y > 10 then
+                    repeat
+                        blocks.Y = blocks.Y*2
+                        half.Y = half.Y/2
+                        partamount = partamount *2
+                    until half.Y < 10
+                end
+                if half.Z > 10 then
+                    repeat
+                        blocks.Z = blocks.Z*2
+                        half.Z = half.Z/2
+                        partamount = partamount *2
+                    until half.Z < 10
+                end
+                if blocks.X ~= 1 or blocks.Y ~= 1 or blocks.Z ~= 1 then
+                    local newsize = Vector3.new(half.X, half.Y, half.Z)
+                    local cf = bottomright * CFrame.new(newsize.X/2, newsize.Y/2, newsize.Z/2)
+                    local xcf = cf
+                    local ycf = cf
+                    local zcf = cf
+                    for i = 1, blocks.X do
+                        partsTable[#partsTable + 1] = {
+                            Size = newsize,
+                            CF = xcf,
+                            Orientation = obj.Orientation,
+                            Color = obj.BrickColor.Color
+                        }
+        
+                        ycf = xcf
+                        zcf = xcf
+                        xcf = xcf * CFrame.new(half.X, 0, 0)
+                        for y = 1, blocks.Y-1 do
+                            partsTable[#partsTable + 1] = {
+                                Size = newsize,
+                                CF = ycf * CFrame.new(0, half.Y*y, 0),
+                                Orientation = obj.Orientation,
+                                Color = obj.BrickColor.Color
+                            }
+                        end
+                        for z = 1, blocks.Z-1 do
+                            partsTable[#partsTable + 1] = {
+                                Size = newsize,
+                                CF = zcf * CFrame.new(0, 0, half.Z*z),
+                                Orientation = obj.Orientation,
+                                Color = obj.BrickColor.Color
+                            }
+                            ycf = zcf * CFrame.new(0, 0, half.Z*z)
+                            for y = 1, blocks.Y-1 do
+                                partsTable[#partsTable + 1] = {
+                                    Size = newsize,
+                                    CF = ycf * CFrame.new(0, half.Y*y, 0),
+                                    Orientation = obj.Orientation,
+                                    Color = obj.BrickColor.Color
+                                }
+                            end
+                        end
+                    end
+                end
+            end
         end
 
         local function disconnect(index)
@@ -1097,9 +1238,9 @@ local function personBuild(id)
                 if v.Name == "Part" and v:IsA("Part") then
                     v.CanQuery = true
                     v.CanTouch = true
-                    --sethiddenproperty(v, "NetworkIsSleeping", true)
+                    ----sethiddenproperty(v, "NetworkIsSleeping", true)
                     v.Velocity = Vector3.new(0,0,0)
-                    ----sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.OnContact)
+                    ------sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.OnContact)
                     thread(function()
                         local oldcf = v.CFrame
                         while not v.Anchored do
@@ -1109,8 +1250,8 @@ local function personBuild(id)
                     end)
                     
                     task.delay(3, function()
-                        --sethiddenproperty(v, "NetworkIsSleeping", false)
-                        ----sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
+                        ----sethiddenproperty(v, "NetworkIsSleeping", false)
+                        ------sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
                         v.CanQuery = false
                         v.CanTouch = false
                     end)
@@ -1130,13 +1271,13 @@ local function personBuild(id)
 
             if Child:IsA("Part") and Child.Name == "Part" and (roundNumber(Child.Size.X, 3) == roundNumber(size.X, 3)) and (roundNumber(Child.Size.Y, 3) == roundNumber(size.Y, 3)) and (roundNumber(Child.Size.Z, 3) == roundNumber(size.Z, 3)) then
 
-                ----sethiddenproperty(Child, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
+                ------sethiddenproperty(Child, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
                 --Child:SetAttribute("CMD", uid)
                 thread(personColor, PB, Child, color)
                 
                 Child.Orientation = ori
 
-                --sethiddenproperty(Child, "NetworkIsSleeping", false)
+                ----sethiddenproperty(Child, "NetworkIsSleeping", false)
                 
                 Child.CanCollide = false
                 Child.CanQuery = false
@@ -4670,7 +4811,7 @@ addCommand({
             task.wait()
             if ch:IsA("Model") then
                 ch:WaitForChild("SkateBoardPlatform").CanCollide = false
-                --sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                ----sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
             end
         end)
     end,
@@ -4906,7 +5047,7 @@ addCommand({
         local colorL
         local nextPart = false
 
-        KAHInstances.ChildAdded:Connect(function(Child)
+        Connections.Drawing["InstanceAdded"] = KAHInstances.ChildAdded:Connect(function(Child)
             local size,position,color,ori = sizeL,positionL, colorL, oriL
             nextPart = true
             if Child:IsA("Part") and Child.Name == "Part" and (roundNumber(Child.Size.X, 3) == size.X) and (roundNumber(Child.Size.Y, 3) == size.Y) and (roundNumber(Child.Size.Z, 3) == size.Z) then
@@ -4918,7 +5059,7 @@ addCommand({
             
                 thread(personColor, PB, Child, color)
 
-                ----sethiddenproperty(Child, "NetworkIsSleeping", false)
+                --sethiddenproperty(Child, "NetworkIsSleeping", false)
                 
                 Child.CanCollide = false
                 Child.CanQuery = false
@@ -4959,6 +5100,7 @@ addCommand({
         thread(function()
             while drawState do
                 sleep(.5)
+                print("Draw state is:", drawState)
                 if not paintBucket or (paintBucket.Parent ~= LocalPlayer.Character and paintBucket.Parent ~= LocalPlayer.Backpack) then
                     send('gear me 18474459')
                     paintBucket = LocalPlayer.Backpack:WaitForChild("PaintBucket")
@@ -5462,7 +5604,7 @@ addCommand({
 
         conn2 = VisBindable.Event:Connect(function(Action, ...)
             if Action == "Stop" then
-
+                vis.Parent = nil
                 kahcon:Disconnect()
 
                 vis:Destroy()
