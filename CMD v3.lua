@@ -268,9 +268,9 @@ game:GetService("TestService").IsPhysicsEnvironmentalThrottled = false
 thread(function()
     while true do
         sleep()
-        sethiddenproperty(LocalPlayer, "SimulationRadius", 999.999)
-        sethiddenproperty(LocalPlayer, "MaxSimulationRadius", 1000)
-        sethiddenproperty(LocalPlayer, "MaximumSimulationRadius", 1000)
+        --sethiddenproperty(LocalPlayer, "SimulationRadius", 999.999)
+        --sethiddenproperty(LocalPlayer, "MaxSimulationRadius", 1000)
+        --sethiddenproperty(LocalPlayer, "MaximumSimulationRadius", 1000)
     end
 end)
 
@@ -1097,9 +1097,9 @@ local function personBuild(id)
                 if v.Name == "Part" and v:IsA("Part") then
                     v.CanQuery = true
                     v.CanTouch = true
-                    sethiddenproperty(v, "NetworkIsSleeping", true)
+                    --sethiddenproperty(v, "NetworkIsSleeping", true)
                     v.Velocity = Vector3.new(0,0,0)
-                    --sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.OnContact)
+                    ----sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.OnContact)
                     thread(function()
                         local oldcf = v.CFrame
                         while not v.Anchored do
@@ -1109,8 +1109,8 @@ local function personBuild(id)
                     end)
                     
                     task.delay(3, function()
-                        sethiddenproperty(v, "NetworkIsSleeping", false)
-                        --sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
+                        --sethiddenproperty(v, "NetworkIsSleeping", false)
+                        ----sethiddenproperty(v, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
                         v.CanQuery = false
                         v.CanTouch = false
                     end)
@@ -1130,13 +1130,13 @@ local function personBuild(id)
 
             if Child:IsA("Part") and Child.Name == "Part" and (roundNumber(Child.Size.X, 3) == roundNumber(size.X, 3)) and (roundNumber(Child.Size.Y, 3) == roundNumber(size.Y, 3)) and (roundNumber(Child.Size.Z, 3) == roundNumber(size.Z, 3)) then
 
-                --sethiddenproperty(Child, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
+                ----sethiddenproperty(Child, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
                 --Child:SetAttribute("CMD", uid)
                 thread(personColor, PB, Child, color)
                 
                 Child.Orientation = ori
 
-                sethiddenproperty(Child, "NetworkIsSleeping", false)
+                --sethiddenproperty(Child, "NetworkIsSleeping", false)
                 
                 Child.CanCollide = false
                 Child.CanQuery = false
@@ -4670,7 +4670,7 @@ addCommand({
             task.wait()
             if ch:IsA("Model") then
                 ch:WaitForChild("SkateBoardPlatform").CanCollide = false
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                --sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
             end
         end)
     end,
@@ -4911,14 +4911,14 @@ addCommand({
             nextPart = true
             if Child:IsA("Part") and Child.Name == "Part" and (roundNumber(Child.Size.X, 3) == size.X) and (roundNumber(Child.Size.Y, 3) == size.Y) and (roundNumber(Child.Size.Z, 3) == size.Z) then
                 
-                --sethiddenproperty(Child, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
+                ----sethiddenproperty(Child, "NetworkOwnershipRule", Enum.NetworkOwnership.Manual)
 
                 local s = Instance.new("ForceField", Child)
                 s.Visible = false
             
                 thread(personColor, PB, Child, color)
 
-                sethiddenproperty(Child, "NetworkIsSleeping", false)
+                ----sethiddenproperty(Child, "NetworkIsSleeping", false)
                 
                 Child.CanCollide = false
                 Child.CanQuery = false
@@ -5284,7 +5284,7 @@ addCommand({
                                 c.Locked = false
                                 c.CanTouch = false
                                 c.Massless = true
-                                sethiddenproperty(c, "NetworkIsSleeping", false)
+                                --sethiddenproperty(c, "NetworkIsSleeping", false)
                                 
                                 game.RunService.Heartbeat:Connect(function() 
                                     c.Velocity = Vector3.new(54,34,0)
@@ -5417,7 +5417,7 @@ addCommand({
                 child.CanCollide = false
                 child.CanTouch = false
                 child.Massless = true
-                sethiddenproperty(child, "NetworkIsSleeping", false)
+                --sethiddenproperty(child, "NetworkIsSleeping", false)
 
                 thread(function()
                     child.Velocity = Vector3.new(54,34,0)
