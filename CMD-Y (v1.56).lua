@@ -2185,8 +2185,6 @@ CMDY.s66226262626.CornerRadius = UDim.new(200, 0)
 CMDY.s66226262626.Name = "s66226262626"
 CMDY.s66226262626.Parent = CMDY.CloseLogs
 
-local ActBar = Instance.new("TextBox", game.CoreGui.CoreScriptLocalization)
-
 local function ZCFUV_fake_script() -- CMDY.CMDY.LocalScript 
 	local script = Instance.new('LocalScript', CMDY.CMDY)
 	local Player = game.Players.LocalPlayer
