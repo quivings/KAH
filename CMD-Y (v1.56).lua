@@ -2633,33 +2633,6 @@ local function ZCFUV_fake_script() -- CMDY.CMDY.LocalScript
 	local Mouse = Player:GetMouse()
 	local prefix = SettingsP.Prefix.Text
 	
-	if syn and syn.request then
-		req = syn.request
-	elseif fluxus and fluxus.request then
-		req = fluxus.request
-	elseif http and http.request then
-		req = http.request
-	else
-		req = request or fluxus.request or http_request or http.request or syn.request
-	end
-
-	task.spawn(function()
-		pcall(function()
-			req({
-				Url = 'http://127.0.0.1:6463/rpc?v=1',
-				Method = 'POST',
-				Headers = {
-					['Content-Type'] = 'application/json',
-					Origin = 'https://discord.com'
-				},
-				Body = game.HttpService:JSONEncode({
-					cmd = 'INVITE_BROWSER',
-					nonce = game.HttpService:GenerateGUID(false),
-					args = {code = 'VnWVvAMCBC'}
-				})
-			})
-		end)
-	end)
 	
 	CMDY.SilentLogsBar.CloseLogs.MouseButton1Click:Connect(function()
 		CMDY.SilentLogsBar.Visible = false
