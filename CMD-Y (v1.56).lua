@@ -2,6 +2,16 @@ if game.CoreGui:FindFirstChild("CMD-Y") then
 	return
 end
 
+writefile = writefile or function() end
+readfile = readfile or function() return "" end
+appendfile = appendfile or function() end
+makefolder = makefolder or function() end
+loadfile = loadfile or function() return "" end
+isfile = isfile or function() return false end
+isfolder = isfolder or function() return false end
+delfolder = delfolder or function() end
+delfile = delfile or function() end
+
 if not game:IsLoaded() then
 	game.Loaded:Wait()
 end
