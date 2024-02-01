@@ -1,6 +1,6 @@
 --Init
 
-
+-- Copyright CMD Softworks 2024
 
 if not game:IsLoaded() then
 	game.Loaded:Wait()
