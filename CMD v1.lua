@@ -1,3 +1,4 @@
+-- Copyright CMD Softworks 2024
 
 function cmdw()
 	game:GetService("RunService").Heartbeat:Wait()
