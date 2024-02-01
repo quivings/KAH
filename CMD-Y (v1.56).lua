@@ -1,3 +1,6 @@
+-- Copyright CMD Softworks 2024
+
+
 if game.CoreGui:FindFirstChild("CMD-Y") then
 	return
 end
