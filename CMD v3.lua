@@ -590,7 +590,7 @@ local function wclick(cd)
     
     local conn
     
-    conn = game.RunService.Heartbeat:Connect(function()
+    conn = RunService.Heartbeat:Connect(function()
         p.CFrame = workspace.Camera.CFrame *CFrame.new(0,0,-20) * CFrame.new(workspace.Camera.CFrame.LookVector.X,workspace.Camera.CFrame.LookVector.Y,workspace.Camera.CFrame.LookVector.Z)
     end)
     
@@ -1236,7 +1236,7 @@ local function personBuild(id)
                 end)
 
                 local B
-                B = game.RunService.Heartbeat:Connect(function()
+                B = RunService.Heartbeat:Connect(function()
                     if Child.Parent ~= KAHInstances then
                         partStay:Disconnect()
                         B:Disconnect()
@@ -5001,7 +5001,7 @@ addCommand({
                 end)
 
                 local B
-                B = game.RunService.Heartbeat:Connect(function()
+                B = RunService.Heartbeat:Connect(function()
                     if Child.Parent ~= KAHInstances then
                         partStay:Disconnect()
                         B:Disconnect()
@@ -5351,7 +5351,7 @@ addCommand({
                                 c.Massless = true
                                 --sethiddenproperty(c, "NetworkIsSleeping", false)
                                 
-                                game.RunService.Heartbeat:Connect(function() 
+                                RunService.Heartbeat:Connect(function() 
                                     c.Velocity = Vector3.new(54,34,0)
                                     c.CFrame = cf
                                 end)
