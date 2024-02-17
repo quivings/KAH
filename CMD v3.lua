@@ -604,6 +604,25 @@ local function wclick(cd)
     p:Destroy()
 end
 
+local function IsAdmin(Player)
+    if Player ~= LocalPlayer then
+        local p299BC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/37127'))
+        local p299NBC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/35748'))
+        local permBC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/64354'))
+        local permNBC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/66254'))
+
+        
+        if KAHAdmin.Pads:FindFirstChild(Player.Name .. "'s admin") or p299BC.data.id or p299NBC.data.id or permBC.data.id or permNBC.data.id then
+            return true
+        end
+    else
+        if KAHAdmin.Pads:FindFirstChild(Player.Name .. "'s admin") or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 66254) or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 35748) or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 64354) or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 37127) then
+            return true
+        end
+    end
+    return false
+end
+
 local IsP299Only = ((MarketplaceService:UserOwnsGamePassAsync(LocalPlayer.UserId, 35748) or MarketplaceService:UserOwnsGamePassAsync(LocalPlayer.UserId, 37127)) and not (MarketplaceService:UserOwnsGamePassAsync(LocalPlayer.UserId, 66254) or MarketplaceService:UserOwnsGamePassAsync(LocalPlayer.UserId, 64354)))
 
 local function send(...)
@@ -2359,24 +2378,7 @@ local function findRegen()
     workspace.Gravity = 198.6
 end
 
-local function IsAdmin(Player)
-    if Player ~= LocalPlayer then
-        local p299BC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/37127'))
-        local p299NBC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/35748'))
-        local permBC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/64354'))
-        local permNBC = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://inventory.roblox.com/v1/users/' .. Player.UserId .. '/items/GamePass/66254'))
 
-        
-        if KAHAdmin.Pads:FindFirstChild(Player.Name .. "'s admin") or p299BC.data.id or p299NBC.data.id or permBC.data.id or permNBC.data.id then
-            return true
-        end
-    else
-        if KAHAdmin.Pads:FindFirstChild(Player.Name .. "'s admin") or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 66254) or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 35748) or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 64354) or MarketplaceService:UserOwnsGamePassAsync(Player.UserId, 37127) then
-            return true
-        end
-    end
-    return false
-end
 
 local function tempBan(player, T)
     ban(player.Name, true)
