@@ -2505,13 +2505,13 @@ thread(function()
             if not KAHAdmin.Pads:FindFirstChild(LocalPlayer.Name .. "'s admin") then
                 regen()
             end
-            touch(KAHAdmin.Pads:FindFirstChildOfClass("Model"):FindFirstChild("Head"))
+            pcall(touch, KAHAdmin.Pads:FindFirstChildOfClass("Model"):FindFirstChild("Head"))
         end
         if Toggles.KeepPads then
             regen()
             for _,v in pairs(KAHAdmin.Pads:GetDescendants()) do
                 if v.Name == "Head" then
-                    touch(v)
+                    pcall(touch, v)
                 end
             end  
         end
