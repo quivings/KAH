@@ -1289,7 +1289,7 @@ local function personBuild(id)
               --  sleep(5)
             --    it = 0
            -- end
-    
+    	    if complete then for _,v in pairs(connections) do v:Disconnect() end for _,v in pairs(buildingConnections) do v:Disconnect() end return end
             draw(v.CF, newSize, v.Orientation, v.Color)
         end
 
