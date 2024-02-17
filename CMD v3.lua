@@ -4390,6 +4390,7 @@ addCommand({
             local GearsDecoded = game:GetService("HttpService"):JSONDecode(GearsJSON)
             if GearsDecoded and GearsDecoded.data then
                 for _,v in pairs(GearsDecoded.data) do
+		    print(_,v)
                     local Asset
                     local AssetOk, E = pcall(function() Asset = MarketplaceService:GetProductInfo(v.id) end)
                     if AssetOk then
