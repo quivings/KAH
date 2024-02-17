@@ -5644,7 +5644,7 @@ addCommand({
                     local ro = math.rad(a / 2 * _ + (_ * (360 / #vis:GetChildren())))
                     local vector = math.sin((a/#vis:GetChildren()/4 * _),0)
                     local uh = math.sin(woah+(_+_*(0/#vis:GetChildren()))*(math.pi), 0)
-                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character.Torso.Position) * CFrame.Angles(0, ro/4, 0) * CFrame.new((pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius, 0, (_+(_/#vis:GetChildren()/2)))
+                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character:WaitForChild("Torso").Position) * CFrame.Angles(0, ro/4, 0) * CFrame.new((pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius, 0, (_+(_/#vis:GetChildren()/2)))
 
                     v.CFrame = F+Vector3.new(0,0,0)
 
@@ -5659,7 +5659,7 @@ addCommand({
                     local ro = math.rad(a / 2 * _ + (_ * (360 / #vis:GetChildren())))
                     local vector = math.sin((a/#vis:GetChildren()/4 * _),0)
                     local uh = math.sin(woah+(_+_*(0/#vis:GetChildren()))*(math.pi), 0)
-                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character.Torso.Position) * CFrame.Angles(0, ro/4, 0) * CFrame.new((pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius, (_+(_/#vis:GetChildren()/2))/1.5, (_+(_/#vis:GetChildren()/2)))
+                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character:WaitForChild("Torso").Position) * CFrame.Angles(0, ro/4, 0) * CFrame.new((pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius, (_+(_/#vis:GetChildren()/2))/1.5, (_+(_/#vis:GetChildren()/2)))
 
                     v.CFrame = F+Vector3.new(0,0,0)
 
@@ -5676,7 +5676,7 @@ addCommand({
                     local ro = math.rad(a / 2 * _ + (_ * (360 / #vis:GetChildren())))
                     local vector = math.sin((a/#vis:GetChildren()/4 * _),0)
                     local uh = math.sin(woah+(_+_*(0/#vis:GetChildren()))*(math.pi), 0)
-                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character.Torso.Position) * CFrame.Angles(uh*5, uh*5+ro, 0) * CFrame.new(uh*5+(pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius, 0, 0)
+                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character:WaitForChild("Torso").Position) * CFrame.Angles(uh*5, uh*5+ro, 0) * CFrame.new(uh*5+(pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius, 0, 0)
                     
                     v.CFrame = F+Vector3.new(0,0,0)
 
@@ -5690,7 +5690,7 @@ addCommand({
                 for _,v in pairs(vis:GetChildren()) do
                     local ro = math.rad(a/2 + (_*(360/#vis:GetChildren())))
                     local uh = math.sin(woah+(_+_*(0/#vis:GetChildren()))*(math.pi), 0)
-                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character.Torso.Position)*CFrame.Angles(0, ro, 0)*CFrame.new(0, 0, uh*5+(pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius)
+                    local F = CFrame.new(typeof(Toggles.VisOrbiter) == "CFrame" and Toggles.VisOrbiter.p or Toggles.VisOrbiter.Character:WaitForChild("Torso").Position)*CFrame.Angles(0, ro, 0)*CFrame.new(0, 0, uh*5+(pbl/ (1 ~= 100 and (100 - 1) or .01))+Toggles.VisRadius)
                     
 
                     v.CFrame = F+Vector3.new(0,vector,0)
