@@ -656,7 +656,7 @@ end
 
 local function regen()
     if tentInstances.Regen.instance then
-        click(tentInstances.Regen.instance.ClickDetector)
+        click(tentInstances.Regen.instance)
     else
         notify("There is no Regen pad.", 3)
     end
