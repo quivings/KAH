@@ -4488,6 +4488,66 @@ addCommand({
 })
 
 addCommand({
+    Name = "gearban",
+    Aliases = {"toolban"},
+    Args = 1,
+    Function = function(user)
+        	local TargetPlayer = getPlayerFromStr(Player)
+        	if TargetPlayer then
+			local nm = TargetPlayer:GetAttribute("fixName")
+			send("gear me 82357101")
+        		send("unff all")
+        		send("speed " ..nm.. " 0")
+           		local pos = LocalPlayer.Character.HumanoidRootPart.CFrame
+        		LocalPlayer.Character.HumanoidRootPart.CFrame = TargetPlayer.Character.HumanoidRootPart.CFrame
+        		local cappy = TargetPlayer.Character
+        		repeat task.wait() until LocalPlayer.Backpack:WaitForChild("PortableJustice")
+        		local tool = LocalPlayer.Backpack:FindFirstChild("PortableJustice")
+        		tool.Parent = LocalPlayer.Character
+        		tool.MouseClick:FireServer(cappy)
+        		task.wait(1)                         
+        		tool:Destroy()
+        		LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+        		Chat("ungear me")
+		end
+    end,
+    Desc = "Gearban a player.",
+    MyAdminBlacklist = true
+})
+
+addCommand({
+    Name = "ungearban",
+    Aliases = {"untoolban"},
+    Args = 1,
+    Function = function(user)
+        	local TargetPlayer = getPlayerFromStr(Player)
+        	if TargetPlayer then
+			if TargetPlayer == LocalPlayer then
+				game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, true)
+			else
+				local nm = TargetPlayer:GetAttribute("fixName")
+				send("ungear me")
+        			send("tp "..nm.." me")
+        			send("speed "..nm.." 0")
+        			task.wait(0.5)
+        			send('gear me 71037101')
+        			repeat task.wait() until LocalPlayer.Backpack:FindFirstChild("DaggerOfShatteredDimensions")
+        			ungear = LocalPlayer.Backpack:FindFirstChild("DaggerOfShatteredDimensions")
+        			task.wait()
+        			ungear.Parent = LocalPlayer.Character
+        			task.wait(0.5)
+        			LocalPlayer.Character.DaggerOfShatteredDimensions.Remote:FireServer(Enum.KeyCode.Q)
+        			task.wait(0.5)
+        			Chat("ungear me")
+        			Chat("speed "..nm.." 16")
+			end
+		end
+    end,
+    Desc = "Ungearban a player.",
+    MyAdminBlacklist = true
+})
+			
+addCommand({
     Name = "messpaint",
     Aliases = {},
     Function = function()
