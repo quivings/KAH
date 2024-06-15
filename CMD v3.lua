@@ -104,7 +104,9 @@ local Toggles = {
     VisRadius = 20,
     VisOrbiter = LocalPlayer,
     DumpLogs = false,
-    SetHint = false
+    SetHint = false,
+    mymusiconly = false,
+    mymusiconly_id = 0
 }
 
 local Players = game:GetService("Players")
@@ -4415,6 +4417,166 @@ addCommand({
     MyAdminBlacklist = true
 })
 
+game:GetService("RunService").RenderStepped:Connect(function()
+if Toggles.mymusiconly == true then
+    local soundlock = tonumber(Toggles.mymusiconly_id)
+    local origsound = soundlock
+    soundlock = "http://www.roblox.com/asset/?id=" .. tostring(soundlock)
+    local lastUpdateTime = tick()
+    local music = workspace.Terrain["_Game"].Folder:FindFirstChild("Sound")
+    gwawg = 0
+    repeat
+        task.wait(0.1)
+        local currentTime = tick()
+        local elapsedTime = currentTime - lastUpdateTime
+        lastUpdateTime = currentTime
+
+        gwawg = gwawg + elapsedTime
+
+        if workspace.Terrain["_Game"].Folder:FindFirstChild("Sound") then
+            local music = workspace.Terrain["_Game"].Folder:FindFirstChild("Sound")
+            if music.IsLoaded and music.SoundId == soundlock then
+                -- print(music.TimePosition);print(gwawg)
+                if gwawg > music.TimeLength then
+                    gwawg = 0
+                end
+
+                if math.abs(music.TimePosition - gwawg) > 0.5 then
+                    if gwawg < music.TimePosition - 1 or gwawg > music.TimePosition + 1 then
+                        print(music.TimePosition)
+                        print(gwawg)
+                        music.TimePosition = gwawg
+                    end
+                end
+            end
+
+            if music.SoundId ~= soundlock then
+                        Chat("music " .. tostring(origsound))
+            end
+
+            if music.Playing == false and musicoff == false then
+                music:Play()
+            end
+        else
+                Chat("music " .. tostring(origsound))
+        end
+    until not mymusiconly
+end
+end)
+		
+addCommand({
+    Name = "mymusiconly",
+    Aliases = {"mmo", "permmusic", "pmu"},
+    Args = 1,
+    Function = function(mmid)
+                Toggles.mymusiconly = true
+		Toggles.mymusiconly_id = tonumber(mmid)
+    end,
+    Desc = "Prevent players from switching the music you set.",
+    MyAdminBlacklist = false
+})
+
+addCommand({
+    Name = "unmymusiconly",
+    Aliases = {"unmmo", "unpermmusic", "unpmu"},
+    Args = 1,
+    Function = function(mmid)
+                Toggles.mymusiconly = false
+    end,
+    Desc = "Turn off mymusiconly.",
+    MyAdminBlacklist = false
+})
+
+addCommand({
+    Name = "gearban",
+    Aliases = {"toolban"},
+    Args = 1,
+    Function = function(user)
+        	local TargetPlayer = getPlayerFromStr(Player)
+        	if TargetPlayer then
+			local nm = TargetPlayer:GetAttribute("fixName")
+			send("gear me 82357101")
+        		send("unff all")
+        		send("speed " ..nm.. " 0")
+           		local pos = LocalPlayer.Character.HumanoidRootPart.CFrame
+        		LocalPlayer.Character.HumanoidRootPart.CFrame = TargetPlayer.Character.HumanoidRootPart.CFrame
+        		local cappy = TargetPlayer.Character
+        		repeat task.wait() until LocalPlayer.Backpack:WaitForChild("PortableJustice")
+        		local tool = LocalPlayer.Backpack:FindFirstChild("PortableJustice")
+        		tool.Parent = LocalPlayer.Character
+        		tool.MouseClick:FireServer(cappy)
+        		task.wait(1)                         
+        		tool:Destroy()
+        		LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+        		Chat("ungear me")
+		end
+    end,
+    Desc = "Gearban a player.",
+    MyAdminBlacklist = true
+})
+
+addCommand({
+    Name = "ungearban",
+    Aliases = {"untoolban"},
+    Args = 1,
+    Function = function(user)
+        	local TargetPlayer = getPlayerFromStr(Player)
+        	if TargetPlayer then
+			if TargetPlayer == LocalPlayer then
+				game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, true)
+			else
+				local nm = TargetPlayer:GetAttribute("fixName")
+				send("ungear me")
+        			send("tp "..nm.." me")
+        			send("speed "..nm.." 0")
+        			task.wait(0.5)
+        			send('gear me 71037101')
+        			repeat task.wait() until LocalPlayer.Backpack:FindFirstChild("DaggerOfShatteredDimensions")
+        			ungear = LocalPlayer.Backpack:FindFirstChild("DaggerOfShatteredDimensions")
+        			task.wait()
+        			ungear.Parent = LocalPlayer.Character
+        			task.wait(0.5)
+        			LocalPlayer.Character.DaggerOfShatteredDimensions.Remote:FireServer(Enum.KeyCode.Q)
+        			task.wait(0.5)
+        			Chat("ungear me")
+        			Chat("speed "..nm.." 16")
+			end
+		end
+    end,
+    Desc = "Ungearban a player.",
+    MyAdminBlacklist = true
+})
+			
+addCommand({
+    Name = "messpaint",
+    Aliases = {},
+    Function = function()
+                send("gear me 18474459")
+    	        repeat wait() until LocalPlayer.Backpack:FindFirstChild("PaintBucket")
+    	        local paint = LocalPlayer.Backpack:FindFirstChild("PaintBucket")
+   		paint.Parent = LocalPlayer.Character
+	
+		for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+			task.spawn(function()
+					if v:IsA("Part") then
+						local Partse =
+						{
+							["Part"] = v,
+							["Color"] = Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255))
+						}
+						game:GetService("Workspace")[LocalPlayer.Name].PaintBucket:WaitForChild("Remotes").ServerControls:InvokeServer("PaintPart", Partse)
+					end
+			end)
+		end
+						
+		task.wait(1)
+		send("ungear me")
+		send("unpaint all")
+    end,
+    Desc = "Mess the server's paint.",
+    MyAdminBlacklist = false
+})
+					
 addCommand({
     Name = "fixcamera",
     Aliases = {"fixcam", "fixc"},
