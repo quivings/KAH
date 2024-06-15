@@ -4486,7 +4486,37 @@ addCommand({
     Desc = "Turn off mymusiconly.",
     MyAdminBlacklist = false
 })
-				
+
+addCommand({
+    Name = "messpaint",
+    Aliases = {},
+    Function = function()
+                send("gear me 18474459")
+    	        repeat wait() until LocalPlayer.Backpack:FindFirstChild("PaintBucket")
+    	        local paint = LocalPlayer.Backpack:FindFirstChild("PaintBucket")
+   		paint.Parent = LocalPlayer.Character
+	
+		for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+			task.spawn(function()
+					if v:IsA("Part") then
+						local Partse =
+						{
+							["Part"] = v,
+							["Color"] = Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255))
+						}
+						game:GetService("Workspace")[LocalPlayer.Name].PaintBucket:WaitForChild("Remotes").ServerControls:InvokeServer("PaintPart", Partse)
+					end
+			end)
+		end
+						
+		task.wait(1)
+		send("ungear me")
+		send("unpaint all")
+    end,
+    Desc = "Mess the server's paint.",
+    MyAdminBlacklist = false
+})
+					
 addCommand({
     Name = "fixcamera",
     Aliases = {"fixcam", "fixc"},
