@@ -104,7 +104,9 @@ local Toggles = {
     VisRadius = 20,
     VisOrbiter = LocalPlayer,
     DumpLogs = false,
-    SetHint = false
+    SetHint = false,
+    mymusiconly = false,
+    mymusiconly_id = 0
 }
 
 local Players = game:GetService("Players")
@@ -4415,6 +4417,76 @@ addCommand({
     MyAdminBlacklist = true
 })
 
+game:GetService("RunService").RenderStepped:Connect(function()
+if Toggles.mymusiconly == true then
+    local soundlock = tonumber(Toggles.mymusiconly_id)
+    local origsound = soundlock
+    soundlock = "http://www.roblox.com/asset/?id=" .. tostring(soundlock)
+    local lastUpdateTime = tick()
+    local music = workspace.Terrain["_Game"].Folder:FindFirstChild("Sound")
+    gwawg = 0
+    repeat
+        task.wait(0.1)
+        local currentTime = tick()
+        local elapsedTime = currentTime - lastUpdateTime
+        lastUpdateTime = currentTime
+
+        gwawg = gwawg + elapsedTime
+
+        if workspace.Terrain["_Game"].Folder:FindFirstChild("Sound") then
+            local music = workspace.Terrain["_Game"].Folder:FindFirstChild("Sound")
+            if music.IsLoaded and music.SoundId == soundlock then
+                -- print(music.TimePosition);print(gwawg)
+                if gwawg > music.TimeLength then
+                    gwawg = 0
+                end
+
+                if math.abs(music.TimePosition - gwawg) > 0.5 then
+                    if gwawg < music.TimePosition - 1 or gwawg > music.TimePosition + 1 then
+                        print(music.TimePosition)
+                        print(gwawg)
+                        music.TimePosition = gwawg
+                    end
+                end
+            end
+
+            if music.SoundId ~= soundlock then
+                        Chat("music " .. tostring(origsound))
+            end
+
+            if music.Playing == false and musicoff == false then
+                music:Play()
+            end
+        else
+                Chat("music " .. tostring(origsound))
+        end
+    until not mymusiconly
+end
+end)
+		
+addCommand({
+    Name = "mymusiconly",
+    Aliases = {"mmo", "permmusic", "pmu"},
+    Args = 1,
+    Function = function(mmid)
+                Toggles.mymusiconly = true
+		Toggles.mymusiconly_id = tonumber(mmid)
+    end,
+    Desc = "Prevent players from switching the music you set.",
+    MyAdminBlacklist = false
+})
+
+addCommand({
+    Name = "unmymusiconly",
+    Aliases = {"unmmo", "unpermmusic", "unpmu"},
+    Args = 1,
+    Function = function(mmid)
+                Toggles.mymusiconly = false
+    end,
+    Desc = "Turn off mymusiconly.",
+    MyAdminBlacklist = false
+})
+				
 addCommand({
     Name = "fixcamera",
     Aliases = {"fixcam", "fixc"},
